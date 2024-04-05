@@ -24,8 +24,8 @@
             <div :class="loginVisivility ? 'hidden' : ''" id="register">
                 <registerComponent />
             </div>
-            <button @click="goToDashboard">Go to Dashboard</button>
         </div>
+        <button @click="goToDashboard">Go to Dashboard</button>
     </main>
 </template>
 
@@ -67,9 +67,12 @@ main {
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: var(--principal-web);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
+        sans-serifs;
 }
 .form-container {
     display: flex;
@@ -79,18 +82,37 @@ main {
     height: 60vh;
     background-color: var(--light-web);
     border-radius: 5px;
-    box-shadow: 2px 2px 2px 1px var(--dark-web);
+    box-shadow: 10px 10px 30px 0.1px #818181;
+    padding-top: 5vh;
+}
+.form-container h1 {
+    font-size: 50px;
+    font-weight: 600;
 }
 .btns {
     display: flex;
+    margin: 3vh 0;
+}
+.btn {
+    display: flex;
+    height: 50px;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background-color 0.2s;
 }
 .btn:hover {
-    background-color: lightgreen;
+    background-color: var(--first-complementary);
     cursor: pointer;
     user-select: none;
+    color: var(--light-web);
 }
 .active {
-    background-color: red;
+    background-color: var(--second-complementary);
+    color: var(--light-web);
 }
 .hidden {
     display: none;
