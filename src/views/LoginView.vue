@@ -79,11 +79,12 @@ main {
     flex-direction: column;
     align-items: center;
     width: 30vw;
-    height: 60vh;
+    max-height: 82vh;
     background-color: var(--light-web);
     border-radius: 5px;
     box-shadow: 10px 10px 30px 0.1px #818181;
     padding-top: 5vh;
+    overflow: auto;
 }
 .form-container h1 {
     font-size: 50px;
