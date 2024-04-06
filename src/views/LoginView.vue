@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { axiosPostRequest } from '@/helpers/helpers'
 import { ref } from 'vue'
 import router from '@/router'
 import loginComponent from '@/components/loginComponent.vue'
@@ -47,8 +48,10 @@ export default {
         }
     },
     methods: {
-        goToDashboard() {
-            router.push('/dashboard')
+        async goToDashboard() {
+            const peticion = await axiosPostRequest('/userRegister', {}, {})
+            // router.push('/dashboard')
+            console.log(peticion)
         },
         switchForm(form) {
             if (form == 'login') {
