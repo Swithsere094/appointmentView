@@ -32,7 +32,7 @@
 <script>
 import { axiosPostRequest } from '@/helpers/helpers'
 import { ref } from 'vue'
-import router from '@/router'
+// import router from '@/router'
 import loginComponent from '@/components/loginComponent.vue'
 import registerComponent from '@/components/registerComponent.vue'
 export default {
@@ -81,12 +81,12 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30vw;
-    max-height: 82vh;
+    width: 576px;
+    max-height: 742px;
     background-color: var(--light-web);
     border-radius: 5px;
     box-shadow: 10px 10px 30px 0.1px #818181;
-    padding-top: 5vh;
+    padding-top: 42px;
     overflow: auto;
 }
 .form-container h1 {
@@ -95,7 +95,7 @@ main {
 }
 .btns {
     display: flex;
-    margin: 3vh 0;
+    margin: 20px 0;
 }
 .btn {
     display: flex;
@@ -120,5 +120,24 @@ main {
 }
 .hidden {
     display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .form-container {
+        width: 400px;
+    }
+    .form-container h1 {
+        font-size: 40px;
+    }
+    .btn {
+        height: 50px;
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .form-container {
+        width: 320px;
+    }
 }
 </style>

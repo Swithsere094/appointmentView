@@ -36,8 +36,8 @@ export default {
 .form-group {
     display: flex;
     justify-content: center;
-    width: 20vw;
-    margin-bottom: 1.5vw;
+    width: 384px;
+    margin-bottom: 28px;
 }
 .form-group input {
     width: 100%;
@@ -63,5 +63,17 @@ export default {
 
 .buttonRegister:hover {
     border: solid 1px #000;
+}
+
+@media screen and (max-width: 768px) {
+    .form-group {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .form-group {
+        width: 200px;
+    }
 }
 </style>
