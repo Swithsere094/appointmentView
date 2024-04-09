@@ -82,7 +82,7 @@ main {
     flex-direction: column;
     align-items: center;
     width: 576px;
-    max-height: 742px;
+    max-height: 550px;
     background-color: var(--light-web);
     border-radius: 5px;
     box-shadow: 10px 10px 30px 0.1px #818181;
