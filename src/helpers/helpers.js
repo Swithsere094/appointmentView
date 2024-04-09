@@ -1,11 +1,9 @@
 import axios from 'axios'
 
 export const axiosPostRequest = async (direccion, parametros, headers) => {
-    const response = await axios.post(
-        `http://127.0.0.1:8000/api${direccion}`,
-        { params: parametros },
-        { headers: headers }
-    )
+    const response = await axios.post(`http://127.0.0.1:8000/api${direccion}`, parametros, {
+        headers: headers
+    })
     return response.data
 }
 
