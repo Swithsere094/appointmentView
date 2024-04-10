@@ -1,25 +1,47 @@
 <template>
     <section>
-        <form action="">
-            <div class="form-group">
-                <input type="email" placeholder="Email Address" />
-            </div>
-            <div class="form-group">
-                <input type="password" placeholder="Password" />
-            </div>
-            <a class="forgotPassword" href="#">Forgot Password</a>
-            <div class="form-group">
-                <button class="buttonLogin">Login</button>
-            </div>
-        </form>
+        <div class="form-group">
+            <input v-model="userName" type="text" placeholder="Username" />
+        </div>
+        <div class="form-group">
+            <input v-model="password" type="password" placeholder="Password" />
+        </div>
+        <a class="forgotPassword" href="#">Forgot Password</a>
+        <div class="form-group">
+            <button @click="loginUsuario" class="buttonLogin">Login</button>
+        </div>
     </section>
 </template>
 
 <script>
+import { axiosPostRequest } from '@/helpers/helpers';
+import { ref } from 'vue'
 export default {
     name: 'loginComponent',
     setup() {
-        return {}
+        const userName = ref("");
+        const password = ref("");
+        return {
+            userName,
+            password
+        }
+    },
+    methods: {
+        async loginUsuario() {
+            let data = {
+                document: this.userName,
+                password: this.password,
+            }
+            try{
+                const response = await axiosPostRequest('/userLogin', data, {});
+                const token = response.token;
+
+                console.log(token)
+                localStorage.setItem('token', `Bearer ${token}`);
+            } catch {
+                console.log("DATOS INCORRECTOS");
+            }
+        }
     }
 }
 </script>
