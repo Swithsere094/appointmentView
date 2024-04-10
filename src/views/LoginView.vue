@@ -25,14 +25,12 @@
                 <registerComponent />
             </div>
         </div>
-        <button @click="goToDashboard">Go to Dashboard</button>
+        <!-- <button @click="()=>{this.$router.go()}">Go to Dashboard</button> -->
     </main>
 </template>
 
 <script>
-import { axiosPostRequest } from '@/helpers/helpers'
 import { ref } from 'vue'
-// import router from '@/router'
 import loginComponent from '@/components/loginComponent.vue'
 import registerComponent from '@/components/registerComponent.vue'
 export default {
@@ -48,11 +46,6 @@ export default {
         }
     },
     methods: {
-        async goToDashboard() {
-            const peticion = await axiosPostRequest('/userRegister', {}, {})
-            // router.push('/dashboard')
-            console.log(peticion)
-        },
         switchForm(form) {
             if (form == 'login') {
                 this.loginVisivility = 1

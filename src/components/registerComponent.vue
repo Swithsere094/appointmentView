@@ -40,7 +40,9 @@
 </template>
 
 <script>
+import { sweetMessage } from '@/helpers/alertsService'
 import { axiosGetRequest, axiosPostRequest } from '@/helpers/helpers'
+import router from '@/router'
 import { onMounted, ref } from 'vue'
 export default {
     name: 'registerComponent',
@@ -83,14 +85,11 @@ export default {
 
             try {
                 await axiosPostRequest('/userRegister', data, {})
-                console.log('ASDFASDFA')
+                await sweetMessage("Usuario creado correctamente")
+                router.go()
             } catch (e) {
                 this.errors = e.response.data.errors
             }
-            // if (registroUsuarios.response.status == 200) {
-            //     console.log('Peticion correcta')
-            //     return
-            // }
         }
     }
 }
