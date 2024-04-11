@@ -6,6 +6,10 @@
         <div class="form-group">
             <input v-model="password" type="password" placeholder="Password" />
         </div>
+        <div class="form-group-left">
+            <input v-model="remember" type="checkbox" id="remember" />
+            <label for="remember">Remember me</label>
+        </div>
         <a class="forgotPassword" href="#">Forgot Password</a>
         <div class="form-group">
             <button @click="loginUsuario" class="buttonLogin">Login</button>
@@ -14,16 +18,18 @@
 </template>
 
 <script>
-import { axiosPostRequest } from '@/helpers/helpers';
+import { axiosPostRequest } from '@/helpers/helpers'
 import { ref } from 'vue'
 export default {
     name: 'loginComponent',
     setup() {
-        const userName = ref("");
-        const password = ref("");
+        const userName = ref('')
+        const password = ref('')
+        const remember = ref(false)
         return {
             userName,
-            password
+            password,
+            remember
         }
     },
     methods: {
@@ -31,15 +37,16 @@ export default {
             let data = {
                 document: this.userName,
                 password: this.password,
+                rememberMe: this.remember
             }
-            try{
-                const response = await axiosPostRequest('/userLogin', data, {});
-                const token = response.token;
+            try {
+                const response = await axiosPostRequest('/userLogin', data, {})
+                const token = response.token
 
                 console.log(token)
-                localStorage.setItem('token', `Bearer ${token}`);
+                localStorage.setItem('token', `Bearer ${token}`)
             } catch {
-                console.log("DATOS INCORRECTOS");
+                console.log('DATOS INCORRECTOS')
             }
         }
     }
@@ -51,9 +58,15 @@ export default {
     display: flex;
     justify-content: center;
     width: 384px;
+    margin-bottom: 14px;
+}
+.form-group-left {
+    display: flex;
+    width: 384px;
     margin-bottom: 28px;
 }
-.form-group input {
+.form-group input[type='text'],
+.form-group input[type='password'] {
     width: 100%;
     height: 40px;
     border-bottom: 1px solid var(--second-complementary);
