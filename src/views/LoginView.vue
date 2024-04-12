@@ -75,6 +75,7 @@ main {
     flex-direction: column;
     align-items: center;
     width: 576px;
+    min-height: 410px;
     max-height: 550px;
     background-color: var(--light-web);
     border-radius: 5px;

@@ -27,15 +27,31 @@
         </div>
         <div class="form-group">
             <div class="form-group--password">
-                <input v-model="selectedPassword" :type="toggle ? 'text' : 'password'" placeholder="Password" />
-                <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]">
+                <input
+                    v-model="selectedPassword"
+                    :type="toggle ? 'text' : 'password'"
+                    placeholder="Password"
+                />
+                <img
+                    class="togle-password"
+                    @click="togglePassword"
+                    :src="togledPasswords[toggle]"
+                />
             </div>
             <small class="error">{{ errors.password ? errors.password[0] : '' }}</small>
         </div>
         <div class="form-group">
             <div class="form-group--password">
-                <input v-model="selectedRepeatPassword" :type="toggle ? 'text' : 'password'" placeholder="Repeat Password" />
-                <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]">
+                <input
+                    v-model="selectedRepeatPassword"
+                    :type="toggle ? 'text' : 'password'"
+                    placeholder="Repeat Password"
+                />
+                <img
+                    class="togle-password"
+                    @click="togglePassword"
+                    :src="togledPasswords[toggle]"
+                />
             </div>
             <small class="error">{{ errors.password ? errors.password[0] : '' }}</small>
         </div>
@@ -54,10 +70,10 @@ export default {
     name: 'registerComponent',
     setup() {
         const togledPasswords = {
-            0: "/src/assets/eye.svg",
-            1: "/src/assets/eye-slash.svg",
-        };
-        const toggle = ref(0);
+            0: '/src/assets/eye.svg',
+            1: '/src/assets/eye-slash.svg'
+        }
+        const toggle = ref(0)
         const doctypes = ref([])
         const selectedDoctype = ref('')
         const selectedDocument = ref('')
@@ -81,7 +97,7 @@ export default {
             selectedRepeatPassword,
             errors,
             togledPasswords,
-            toggle,
+            toggle
         }
     },
     methods: {
@@ -98,7 +114,7 @@ export default {
 
             try {
                 await axiosPostRequest('/userRegister', data, {})
-                await sweetMessage("Usuario creado correctamente")
+                await sweetMessage('Usuario creado correctamente')
                 router.go()
             } catch (e) {
                 this.errors = e.response.data.errors
@@ -120,8 +136,7 @@ export default {
     width: 384px;
     margin-bottom: 28px;
 }
-.form-group input,
-.form-group select {
+.form-group input {
     width: 100%;
     height: 40px;
     border: none;
@@ -129,7 +144,15 @@ export default {
     border-radius: 10px;
     padding-left: 15px;
 }
-.form-group--password{
+.form-group select {
+    width: 104%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid var(--second-complementary);
+    border-radius: 10px;
+    padding-left: 15px;
+}
+.form-group--password {
     position: relative;
     width: 104%;
     display: flex;

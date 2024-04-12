@@ -4,8 +4,8 @@
             <input v-model="userName" type="text" placeholder="Username" />
         </div>
         <div class="form-group">
-            <input v-model="password" :type="toggle ? 'text' : 'password'" placeholder="Password"/>
-            <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]">
+            <input v-model="password" :type="toggle ? 'text' : 'password'" placeholder="Password" />
+            <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]" />
         </div>
         <div class="form-group-left">
             <input v-model="remember" type="checkbox" id="remember" />
@@ -25,19 +25,19 @@ export default {
     name: 'loginComponent',
     setup() {
         const togledPasswords = {
-            0: "/src/assets/eye.svg",
-            1: "/src/assets/eye-slash.svg",
-        };
+            0: '/src/assets/eye.svg',
+            1: '/src/assets/eye-slash.svg'
+        }
         const userName = ref('')
         const password = ref('')
         const remember = ref(false)
-        const toggle = ref(0);
+        const toggle = ref(0)
         return {
             userName,
             password,
             remember,
             toggle,
-            togledPasswords,
+            togledPasswords
         }
     },
     methods: {
@@ -88,11 +88,18 @@ export default {
 }
 
 .form-group-left input {
-    width: 15px;
-    height: 15px;
-    border-bottom: 1px solid var(--second-complementary);
-    border-radius: 10px;
+    width: 20px;
+    height: 20px;
     margin: 0 10px;
+    background-color: var(--light-web);
+    border-radius: 5px;
+    border: 2px solid #888;
+    /* appearance: none; */
+    cursor: pointer;
+}
+
+.form-group-left input:checked {
+    accent-color: var(--second-complementary);
 }
 
 .togle-password {
@@ -120,7 +127,8 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
-    .form-group, .form-group-left {
+    .form-group,
+    .form-group-left {
         width: 300px;
     }
 
@@ -130,7 +138,8 @@ export default {
 }
 
 @media screen and (max-width: 426px) {
-    .form-group, .form-group-left {
+    .form-group,
+    .form-group-left {
         width: 200px;
     }
 
