@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { sweetMessage } from '@/helpers/alertsService'
 import { axiosPostRequest } from '@/helpers/helpers'
 import router from '@/router'
 import { ref } from 'vue'
@@ -52,11 +53,11 @@ export default {
                 const response = await axiosPostRequest('/userLogin', data, {})
                 const token = response.token
 
-                console.log(token)
                 localStorage.setItem('token', `Bearer ${token}`)
                 router.push('/dashboard')
-            } catch {
-                console.log('DATOS INCORRECTOS')
+            } catch (e) {
+                const errorMessage = e.response.data.message
+                await sweetMessage(errorMessage, '', 'error', 1500)
             }
         },
         togglePassword() {

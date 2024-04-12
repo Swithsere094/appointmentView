@@ -30,9 +30,10 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import loginComponent from '@/components/loginComponent.vue'
 import registerComponent from '@/components/registerComponent.vue'
+import router from '@/router'
 export default {
     components: {
         loginComponent,
@@ -41,6 +42,12 @@ export default {
     name: 'loginView',
     setup() {
         const loginVisivility = ref(1)
+        onMounted(() => {
+            const token = localStorage.getItem('token')
+            if (token) {
+                router.push('/dashboard')
+            }
+        })
         return {
             loginVisivility
         }

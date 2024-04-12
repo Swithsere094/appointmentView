@@ -9,6 +9,7 @@ import { RouterLink } from 'vue-router'
 import headerComponent from '@/components/headerComponent.vue'
 import { axiosPostRequest } from '@/helpers/helpers'
 import router from '@/router'
+import { sweetMessage } from '@/helpers/alertsService'
 export default {
     name: 'dashboardView',
     components: {
@@ -22,6 +23,7 @@ export default {
     methods: {
         async logOut() {
             await axiosPostRequest('/logout', {}, {})
+            await sweetMessage('Logging Out...', '', 'info', 1500)
             localStorage.removeItem('token')
             router.go()
         }
