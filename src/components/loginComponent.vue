@@ -20,6 +20,7 @@
 
 <script>
 import { axiosPostRequest } from '@/helpers/helpers'
+import router from '@/router'
 import { ref } from 'vue'
 export default {
     name: 'loginComponent',
@@ -53,6 +54,7 @@ export default {
 
                 console.log(token)
                 localStorage.setItem('token', `Bearer ${token}`)
+                router.push('/dashboard')
             } catch {
                 console.log('DATOS INCORRECTOS')
             }
