@@ -26,11 +26,17 @@
             <small class="error">{{ errors.email ? errors.email[0] : '' }}</small>
         </div>
         <div class="form-group">
-            <input v-model="selectedPassword" type="password" placeholder="Password" />
+            <div class="form-group--password">
+                <input v-model="selectedPassword" :type="toggle ? 'text' : 'password'" placeholder="Password" />
+                <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]">
+            </div>
             <small class="error">{{ errors.password ? errors.password[0] : '' }}</small>
         </div>
         <div class="form-group">
-            <input v-model="selectedRepeatPassword" type="password" placeholder="Repeat Password" />
+            <div class="form-group--password">
+                <input v-model="selectedRepeatPassword" :type="toggle ? 'text' : 'password'" placeholder="Repeat Password" />
+                <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]">
+            </div>
             <small class="error">{{ errors.password ? errors.password[0] : '' }}</small>
         </div>
         <div class="form-group">
@@ -47,6 +53,11 @@ import { onMounted, ref } from 'vue'
 export default {
     name: 'registerComponent',
     setup() {
+        const togledPasswords = {
+            0: "/src/assets/eye.svg",
+            1: "/src/assets/eye-slash.svg",
+        };
+        const toggle = ref(0);
         const doctypes = ref([])
         const selectedDoctype = ref('')
         const selectedDocument = ref('')
@@ -68,7 +79,9 @@ export default {
             selectedEmail,
             selectedPassword,
             selectedRepeatPassword,
-            errors
+            errors,
+            togledPasswords,
+            toggle,
         }
     },
     methods: {
@@ -90,6 +103,9 @@ export default {
             } catch (e) {
                 this.errors = e.response.data.errors
             }
+        },
+        togglePassword() {
+            this.toggle = Math.abs(this.toggle - 1)
         }
     }
 }
@@ -100,6 +116,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 384px;
     margin-bottom: 28px;
 }
@@ -112,11 +129,22 @@ export default {
     border-radius: 10px;
     padding-left: 15px;
 }
+.form-group--password{
+    position: relative;
+    width: 104%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.togle-password {
+    position: absolute;
+    margin-left: 330px;
+}
 .forgotPassword {
     font-size: 17px;
     color: var(--second-complementary);
 }
-
 .buttonRegister {
     margin-top: 35px;
     width: 100%;
@@ -139,11 +167,17 @@ export default {
     .form-group {
         width: 300px;
     }
+    .togle-password {
+        margin-left: 250px;
+    }
 }
 
 @media screen and (max-width: 426px) {
     .form-group {
         width: 200px;
+    }
+    .togle-password {
+        margin-left: 160px;
     }
 }
 </style>

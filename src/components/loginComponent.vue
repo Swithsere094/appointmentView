@@ -4,7 +4,8 @@
             <input v-model="userName" type="text" placeholder="Username" />
         </div>
         <div class="form-group">
-            <input v-model="password" type="password" placeholder="Password" />
+            <input v-model="password" :type="toggle ? 'text' : 'password'" placeholder="Password"/>
+            <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]">
         </div>
         <div class="form-group-left">
             <input v-model="remember" type="checkbox" id="remember" />
@@ -23,13 +24,20 @@ import { ref } from 'vue'
 export default {
     name: 'loginComponent',
     setup() {
+        const togledPasswords = {
+            0: "/src/assets/eye.svg",
+            1: "/src/assets/eye-slash.svg",
+        };
         const userName = ref('')
         const password = ref('')
         const remember = ref(false)
+        const toggle = ref(0);
         return {
             userName,
             password,
-            remember
+            remember,
+            toggle,
+            togledPasswords,
         }
     },
     methods: {
@@ -48,6 +56,9 @@ export default {
             } catch {
                 console.log('DATOS INCORRECTOS')
             }
+        },
+        togglePassword() {
+            this.toggle = Math.abs(this.toggle - 1)
         }
     }
 }
@@ -57,6 +68,7 @@ export default {
 .form-group {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 384px;
     margin-bottom: 14px;
 }
@@ -64,15 +76,30 @@ export default {
     display: flex;
     width: 384px;
     margin-bottom: 28px;
+    align-items: center;
+    user-select: none;
 }
-.form-group input[type='text'],
-.form-group input[type='password'] {
+.form-group input {
     width: 100%;
     height: 40px;
     border-bottom: 1px solid var(--second-complementary);
     border-radius: 10px;
     padding-left: 15px;
 }
+
+.form-group-left input {
+    width: 15px;
+    height: 15px;
+    border-bottom: 1px solid var(--second-complementary);
+    border-radius: 10px;
+    margin: 0 10px;
+}
+
+.togle-password {
+    position: absolute;
+    margin-left: 330px;
+}
+
 .forgotPassword {
     font-size: 17px;
     color: var(--second-complementary);
@@ -93,14 +120,22 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
-    .form-group {
+    .form-group, .form-group-left {
         width: 300px;
+    }
+
+    .togle-password {
+        margin-left: 250px;
     }
 }
 
 @media screen and (max-width: 426px) {
-    .form-group {
+    .form-group, .form-group-left {
         width: 200px;
+    }
+
+    .togle-password {
+        margin-left: 160px;
     }
 }
 </style>
