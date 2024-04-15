@@ -2,18 +2,36 @@
     <header>
         <div class="wrapper">
             <nav>
-                <RouterLink to="/">Login</RouterLink>
-                <!-- <RouterLink to="/about">About</RouterLink> -->
+                <div class="nav-router">
+                    <RouterLink to="">My Appointments</RouterLink>
+                </div>
+                <div class="user-actions">
+                    <button @click="logOut" style="width: 200px">LogOut</button>
+                </div>
             </nav>
         </div>
     </header>
 </template>
 
 <script>
+import { axiosPostRequest } from '@/helpers/helpers'
+import router from '@/router'
+import { showSweetLoading, hideSweetLoading } from '@/helpers/alertsService'
 export default {
     name: 'headerComponent',
     setup() {
         return {}
+    },
+    methods: {
+        async logOut() {
+            showSweetLoading('Logging out')
+            await axiosPostRequest('/logout', {}, {})
+            setTimeout(() => {
+                hideSweetLoading()
+                localStorage.removeItem('token')
+                router.go()
+            }, 1500)
+        }
     }
 }
 </script>
@@ -21,31 +39,15 @@ export default {
 <style scoped>
 header {
     line-height: 1.5;
-    max-height: 100vh;
 }
 
 nav {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin-left: 5%;
+    font-size: 15px;
     margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-    color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-    background-color: transparent;
-}
-
-nav a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-    border: 0;
 }
 </style>

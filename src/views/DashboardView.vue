@@ -1,49 +1,25 @@
 <template>
     <headerComponent />
 
-    <button @click="logOut" style="width: 200px">LogOut</button>
-
-    <FullCalendar :options='calendarOptions' />
+    <UserDatesView />
 </template>
 
 <script>
 import { RouterLink } from 'vue-router'
 import headerComponent from '@/components/headerComponent.vue'
-import { axiosPostRequest } from '@/helpers/helpers'
-import router from '@/router'
-import { sweetMessage } from '@/helpers/alertsService'
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import UserDatesView from './userDatesView.vue'
 export default {
     name: 'dashboardView',
     components: {
         headerComponent,
-        FullCalendar
+        UserDatesView
     },
     setup() {
-    const calendarOptions = {
-            plugins: [dayGridPlugin, interactionPlugin],
-            initialView: 'dayGridMonth',
-            // weekends: false,
-            events: [
-                { title: 'Meeting', start: new Date() }
-            ]
-        }
-
         return {
-            RouterLink,
-            calendarOptions
+            RouterLink
         }
     },
-    methods: {
-        async logOut() {
-            await axiosPostRequest('/logout', {}, {})
-            await sweetMessage('Logging Out...', '', 'info', 1500)
-            localStorage.removeItem('token')
-            router.go()
-        }
-    }
+    methods: {}
 }
 </script>
 

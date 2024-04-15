@@ -1,13 +1,13 @@
 import Swal from 'sweetalert2'
 
-export const showSweetLoading = (time = false) => {
-    Swal.showLoading()
-
-    if (time) {
-        setTimeout(() => {
-            Swal.clickConfirm()
-        }, time)
-    }
+export const showSweetLoading = (title = '', timer = 0) => {
+    Swal.fire({
+        title: title,
+        timer: timer,
+        didOpen: () => {
+            Swal.showLoading()
+        }
+    })
 }
 
 export const hideSweetLoading = () => {
