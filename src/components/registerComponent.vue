@@ -114,10 +114,15 @@ export default {
 
             try {
                 await axiosPostRequest('/userRegister', data, {})
-                await sweetMessage('Usuario creado correctamente')
+                await sweetMessage('User registered succesfully', 'please check your email inbox')
                 router.go()
             } catch (e) {
-                this.errors = e.response.data.errors
+                if (e.response.status == 403) {
+                    const errorMessage = e.response.data.message
+                    await sweetMessage(errorMessage, '', 'error', 1500)
+                } else {
+                    this.errors = e.response.data.errors
+                }
             }
         },
         togglePassword() {
