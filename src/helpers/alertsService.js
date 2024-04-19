@@ -22,6 +22,7 @@ export const sweetMessage = (title = '', text = '', icon, timer = 0) => {
             text: text,
             icon: icon ?? 'info',
             showConfirmButton: timer == 0,
+            confirmButtonColor: '#f63c3f',
             timer: timer
         }).then(() => {
             resolve(true)
@@ -39,6 +40,7 @@ export const sweetMessageForm = (url = null, title, parameter, type = 'text') =>
             },
             showCancelButton: false,
             confirmButtonText: 'Submit',
+            confirmButtonColor: '#f63c3f',
             showLoaderOnConfirm: true,
             preConfirm: async (param) => {
                 try {
@@ -72,6 +74,7 @@ export const sweetChangePassword = (code) => {
             focusConfirm: false,
             showCancelButton: false,
             confirmButtonText: 'Submit',
+            confirmButtonColor: '#f63c3f',
             preConfirm: async () => {
                 try {
                     const password1 = Swal.getPopup().querySelector('#password1').value
