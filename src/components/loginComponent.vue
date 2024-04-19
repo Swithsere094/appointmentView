@@ -11,7 +11,7 @@
             <input v-model="remember" type="checkbox" id="remember" />
             <label for="remember">Remember me</label>
         </div>
-        <a class="forgotPassword" href="#">Forgot Password</a>
+        <a class="forgotPassword" @click="forgotPassword()">Forgot Password</a>
         <div class="form-group">
             <button @click="loginUsuario" class="buttonLogin">Login</button>
         </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { sweetMessage } from '@/helpers/alertsService'
+import { sweetChangePassword, sweetMessage, sweetMessageForm } from '@/helpers/alertsService'
 import { axiosPostRequest } from '@/helpers/helpers'
 import router from '@/router'
 import { ref } from 'vue'
@@ -62,6 +62,32 @@ export default {
         },
         togglePassword() {
             this.toggle = Math.abs(this.toggle - 1)
+        },
+        async forgotPassword() {
+            const verificationCode = await sweetMessageForm(
+                '/password/email',
+                'Submit your email',
+                'email',
+                'email'
+            )
+            if (verificationCode.status == 200) {
+                this.codeCheck()
+            }
+        },
+        async codeCheck() {
+            const checkedCode = await sweetMessageForm(
+                '/password/code/check',
+                'Submit the verification code',
+                'token',
+                'text'
+            )
+            if (checkedCode.token != '') {
+                this.resetPassword(checkedCode.token)
+            }
+        },
+        async resetPassword(token) {
+            const changedPassword = await sweetChangePassword(token)
+            sweetMessage(changedPassword.message, '', 'info', '2000')
         }
     }
 }
@@ -113,6 +139,10 @@ export default {
 .forgotPassword {
     font-size: 17px;
     color: var(--second-complementary);
+}
+
+.forgotPassword:hover {
+    cursor: pointer;
 }
 
 .buttonLogin {
