@@ -1,16 +1,31 @@
 import axios from 'axios'
 
-export const axiosPostRequest = async (direccion, parametros, headers) => {
-    const response = await axios.post(`http://127.0.0.1:8000/api${direccion}`, parametros, {
-        headers: headers
+export const axiosPostRequest = (direccion, parametros, headers) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`http://127.0.0.1:8000/api${direccion}`, parametros, {
+                headers: headers
+            })
+            .then(({ data }) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
     })
-    return response.data
 }
 
-export const axiosGetRequest = async (direccion, parametros) => {
-    const response = await axios.get(`http://127.0.0.1:8000/api${direccion}`, {
-        params: parametros
+export const axiosGetRequest = (direccion, parametros) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`http://127.0.0.1:8000/api${direccion}`, {
+                params: parametros
+            })
+            .then(({ data }) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error)
+            })
     })
-
-    return response.data
 }
