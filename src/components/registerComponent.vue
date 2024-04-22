@@ -18,10 +18,6 @@
             <small class="error">{{ errors.name ? errors.name[0] : '' }}</small>
         </div>
         <div class="form-group">
-            <input v-model="selectedLastName" type="text" placeholder="Lastname" />
-            <small class="error">{{ errors.lastName ? errors.lastName[0] : '' }}</small>
-        </div>
-        <div class="form-group">
             <input v-model="selectedEmail" type="email" placeholder="Email Address" />
             <small class="error">{{ errors.email ? errors.email[0] : '' }}</small>
         </div>
@@ -78,7 +74,6 @@ export default {
         const selectedDoctype = ref('')
         const selectedDocument = ref('')
         const selectedName = ref('')
-        const selectedLastName = ref('')
         const selectedEmail = ref('')
         const selectedPassword = ref('')
         const selectedRepeatPassword = ref('')
@@ -91,7 +86,6 @@ export default {
             selectedDoctype,
             selectedDocument,
             selectedName,
-            selectedLastName,
             selectedEmail,
             selectedPassword,
             selectedRepeatPassword,
@@ -106,7 +100,6 @@ export default {
                 docType: this.selectedDoctype,
                 document: this.selectedDocument,
                 name: this.selectedName,
-                lastName: this.selectedLastName,
                 email: this.selectedEmail,
                 password: this.selectedPassword,
                 password_confirmation: this.selectedRepeatPassword
