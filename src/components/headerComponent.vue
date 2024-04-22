@@ -39,6 +39,8 @@ export default {
 <style scoped>
 header {
     line-height: 1.5;
+    height: 50px;
+    margin-bottom: 15px;
 }
 
 nav {
