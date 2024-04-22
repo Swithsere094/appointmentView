@@ -1,6 +1,10 @@
 <template>
     <headerComponent />
 
+    <div class="search-container">
+        <input v-model="filter" class="search-input" type="text" v-on:input="search()" />
+    </div>
+
     <div class="bento-grid">
         <div v-for="business in businessList" :key="business.id" class="bento-item">
             <div class="business">
@@ -20,34 +24,58 @@
 <script>
 import { RouterLink } from 'vue-router'
 import headerComponent from '@/components/headerComponent.vue'
-import { onMounted, ref } from 'vue';
-import { axiosGetRequest } from '@/helpers/helpers';
+import { onMounted, ref } from 'vue'
+import { axiosGetRequest } from '@/helpers/helpers'
 // import UserDatesView from './userDatesView.vue'
 export default {
     name: 'dashboardView',
     components: {
-        headerComponent,
+        headerComponent
         // UserDatesView
     },
     setup() {
-        const businessList = ref('');
+        const businessList = ref('')
+        const filter = ref('')
 
         onMounted(async () => {
             businessList.value = await axiosGetRequest('/getBusinessList', {})
-        });
+        })
         return {
             RouterLink,
-            businessList
+            businessList,
+            filter
         }
     },
-    methods: {}
+    methods: {
+        async search() {
+            this.businessList = await axiosGetRequest('/getBusinessList', { filter: this.filter })
+        }
+    }
 }
 </script>
 
 <style scoped>
+.search-container {
+    display: flex;
+    width: 95vw;
+    justify-content: end;
+}
+
+.search-input {
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    border: var(--dark-web) 1px solid;
+    background-color: white;
+    background-image: url('@/assets/search.svg');
+    background-position: 10px 8px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+}
+
 .bento-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 4 columnas en tamaño grande */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
 }
