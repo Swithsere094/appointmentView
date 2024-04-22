@@ -1,31 +1,29 @@
 <template>
     <main>
         <div class="form-container">
-            <h1>{{ loginVisivility ? 'Login' : 'Register' }} Form</h1>
+            <h1>{{ loginVisivility }} Form</h1>
             <div class="btns">
                 <div
-                    :class="loginVisivility ? 'active' : ''"
+                    :class="loginVisivility == 'Login' ? 'active' : ''"
                     class="btn btn-login"
-                    @click="switchForm('login')"
+                    @click="switchForm()"
                 >
                     Login
                 </div>
                 <div
-                    :class="loginVisivility ? '' : 'active'"
+                    :class="loginVisivility == 'Register' ? 'active' : ''"
                     class="btn btn-register"
-                    @click="switchForm('register')"
+                    @click="switchForm()"
                 >
                     Signup
                 </div>
             </div>
-            <div :class="loginVisivility ? '' : 'hidden'" id="login">
-                <loginComponent />
-            </div>
-            <div :class="loginVisivility ? 'hidden' : ''" id="register">
-                <registerComponent />
-            </div>
+            <transition name="fade" mode="out-in">
+                <component
+                    :is="loginVisivility == 'Register' ? 'registerComponent' : 'loginComponent'"
+                ></component>
+            </transition>
         </div>
-        <!-- <button @click="()=>{this.$router.go()}">Go to Dashboard</button> -->
     </main>
 </template>
 
@@ -41,7 +39,7 @@ export default {
     },
     name: 'loginView',
     setup() {
-        const loginVisivility = ref(1)
+        const loginVisivility = ref('Login')
         onMounted(() => {
             const token = localStorage.getItem('token')
             if (token) {
@@ -53,13 +51,13 @@ export default {
         }
     },
     methods: {
-        switchForm(form) {
-            if (form == 'login') {
-                this.loginVisivility = 1
+        switchForm() {
+            const changeTo = {
+                Login: 'Register',
+                Register: 'Login'
             }
-            if (form == 'register') {
-                this.loginVisivility = 0
-            }
+
+            this.loginVisivility = changeTo[this.loginVisivility]
         }
     }
 }
@@ -107,7 +105,9 @@ main {
     border-radius: 5px;
     font-size: 20px;
     font-weight: bold;
-    transition: background-color 0.2s;
+    transition:
+        background-color 0.2s,
+        color 0.2s;
 }
 .btn:hover {
     background-color: var(--first-complementary);
@@ -119,8 +119,14 @@ main {
     background-color: var(--second-complementary);
     color: var(--light-web);
 }
-.hidden {
-    display: none;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 
 @media screen and (max-width: 768px) {
