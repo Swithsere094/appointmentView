@@ -5,9 +5,27 @@
         <input v-model="filter" class="search-input" type="text" v-on:input="search()" />
     </div>
 
-    <div class="bento-grid">
+    <label class="switch">
+        <input type="checkbox" v-model="showList" />
+        <span class="slider"></span>
+    </label>
+
+    <div v-show="!showList" class="bento-grid">
         <div v-for="business in businessList" :key="business.id" class="bento-item">
             <div class="business">
+                <h3>{{ business.name }}</h3>
+                <p>{{ business.email }}</p>
+                <p>{{ business.document }}</p>
+                <div class="actions">
+                    <button class="btn-see">Go to Calendar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="business-list-container">
+        <div v-show="showList" class="business-list">
+            <div v-for="business in businessList" :key="business.id" class="business-item">
                 <h3>{{ business.name }}</h3>
                 <p>{{ business.email }}</p>
                 <p>{{ business.document }}</p>
@@ -36,6 +54,7 @@ export default {
     setup() {
         const businessList = ref('')
         const filter = ref('')
+        const showList = ref(false)
 
         onMounted(async () => {
             businessList.value = await axiosGetRequest('/getBusinessList', {})
@@ -43,7 +62,8 @@ export default {
         return {
             RouterLink,
             businessList,
-            filter
+            filter,
+            showList
         }
     },
     methods: {
@@ -71,6 +91,56 @@ export default {
     background-position: 10px 8px;
     background-repeat: no-repeat;
     padding-left: 40px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-left: 30px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--second-complementary);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
 }
 
 .bento-grid {
@@ -123,6 +193,23 @@ export default {
 }
 
 .btn-see:hover {
-    background-color: #0056b3;
+    background-color: rgb(203, 68, 70);
+}
+
+.business-list {
+    width: 50vw;
+    padding: 20px;
+}
+
+.business-list-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+
+.business-item {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
 }
 </style>
