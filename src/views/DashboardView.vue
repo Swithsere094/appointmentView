@@ -42,7 +42,7 @@
 <script>
 import { RouterLink } from 'vue-router'
 import headerComponent from '@/components/headerComponent.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { axiosGetRequest } from '@/helpers/helpers'
 // import UserDatesView from './userDatesView.vue'
 export default {
@@ -54,10 +54,14 @@ export default {
     setup() {
         const businessList = ref('')
         const filter = ref('')
-        const showList = ref(false)
+        const showList = ref()
 
         onMounted(async () => {
+            showList.value = localStorage.getItem('listView') ?? false
             businessList.value = await axiosGetRequest('/getBusinessList', {})
+        })
+        watch(showList, (value) => {
+            localStorage.setItem('listView', value)
         })
         return {
             RouterLink,
@@ -99,6 +103,7 @@ export default {
     width: 60px;
     height: 34px;
     margin-left: 30px;
+    user-select: none;
 }
 
 .switch input {
