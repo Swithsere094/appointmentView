@@ -25,10 +25,30 @@
 
     <div class="business-list-container">
         <div v-show="showList" class="business-list">
+            <div class="business-item">
+                <div class="business-item--title">
+                    <h3>Name</h3>
+                </div>
+                <div class="business-item--title">
+                    <h3>Email</h3>
+                </div>
+                <div class="business-item--title">
+                    <h3>Document</h3>
+                </div>
+                <div class="business-item--title">
+                    <h3>Actions</h3>
+                </div>
+            </div>
             <div v-for="business in businessList" :key="business.id" class="business-item">
-                <h3>{{ business.name }}</h3>
-                <p>{{ business.email }}</p>
-                <p>{{ business.document }}</p>
+                <div class="business-subitem">
+                    <h3>{{ business.name }}</h3>
+                </div>
+                <div class="business-subitem">
+                    <p>{{ business.email }}</p>
+                </div>
+                <div class="business-subitem">
+                    <p>{{ business.document }}</p>
+                </div>
                 <div class="actions">
                     <button class="btn-see">Go to Calendar</button>
                 </div>
@@ -183,7 +203,7 @@ input:checked + .slider:before {
 
 .actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .btn-see {
@@ -202,7 +222,7 @@ input:checked + .slider:before {
 }
 
 .business-list {
-    width: 50vw;
+    width: 80vw;
     padding: 20px;
 }
 
@@ -210,11 +230,24 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100vw;
+    width: 90vw;
 }
 
 .business-item {
     border-bottom: 1px solid #eee;
     padding: 20px 0;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 1fr 1fr;
+}
+.business-item--title {
+    display: flex;
+    justify-content: center;
+    font-weight: bolder;
+}
+.business-subitem {
+    display: flex;
+    justify-content: center;
 }
 </style>
