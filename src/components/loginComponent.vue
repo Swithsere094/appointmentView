@@ -1,10 +1,15 @@
 <template>
     <section>
         <div class="form-group">
-            <input v-model="userName" type="text" placeholder="Username" />
+            <input v-model="userName" type="text" placeholder="Username" @keyup.enter="userLogin" />
         </div>
         <div class="form-group">
-            <input v-model="password" :type="toggle ? 'text' : 'password'" placeholder="Password" />
+            <input
+                v-model="password"
+                :type="toggle ? 'text' : 'password'"
+                placeholder="Password"
+                @keyup.enter="userLogin"
+            />
             <img class="togle-password" @click="togglePassword" :src="togledPasswords[toggle]" />
         </div>
         <div class="form-group-left">
@@ -13,13 +18,19 @@
         </div>
         <a class="forgotPassword" @click="forgotPassword()">Forgot Password</a>
         <div class="form-group">
-            <button @click="loginUsuario" class="buttonLogin">Login</button>
+            <button @click="userLogin" class="buttonLogin">Login</button>
         </div>
     </section>
 </template>
 
 <script>
-import { sweetChangePassword, sweetMessage, sweetMessageForm } from '@/helpers/alertsService'
+import {
+    hideSweetLoading,
+    showSweetLoading,
+    sweetChangePassword,
+    sweetMessage,
+    sweetMessageForm
+} from '@/helpers/alertsService'
 import { axiosPostRequest } from '@/helpers/helpers'
 import router from '@/router'
 import { ref } from 'vue'
@@ -43,20 +54,23 @@ export default {
         }
     },
     methods: {
-        async loginUsuario() {
+        async userLogin() {
             let data = {
                 document: this.userName,
                 password: this.password,
                 rememberMe: this.remember
             }
+            showSweetLoading('Logging in...')
             try {
                 const response = await axiosPostRequest('/userLogin', data, {})
                 const token = response.token
 
                 localStorage.setItem('token', `Bearer ${token}`)
+                hideSweetLoading()
                 router.push('/dashboard')
             } catch (e) {
                 const errorMessage = e.response.data.message
+                hideSweetLoading()
                 await sweetMessage(errorMessage, '', 'error', 1500)
             }
         },

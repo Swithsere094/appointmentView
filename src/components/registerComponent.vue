@@ -10,15 +10,30 @@
             <small class="error">{{ errors.docType ? errors.docType[0] : '' }}</small>
         </div>
         <div class="form-group">
-            <input v-model="selectedDocument" type="text" placeholder="Document" />
+            <input
+                v-model="selectedDocument"
+                type="text"
+                placeholder="Document"
+                @keyup.enter="userRegister"
+            />
             <small class="error">{{ errors.document ? errors.document[0] : '' }}</small>
         </div>
         <div class="form-group">
-            <input v-model="selectedName" type="text" placeholder="Name" />
+            <input
+                v-model="selectedName"
+                type="text"
+                placeholder="Name"
+                @keyup.enter="userRegister"
+            />
             <small class="error">{{ errors.name ? errors.name[0] : '' }}</small>
         </div>
         <div class="form-group">
-            <input v-model="selectedEmail" type="email" placeholder="Email Address" />
+            <input
+                v-model="selectedEmail"
+                type="email"
+                placeholder="Email Address"
+                @keyup.enter="userRegister"
+            />
             <small class="error">{{ errors.email ? errors.email[0] : '' }}</small>
         </div>
         <div class="form-group">
@@ -27,6 +42,7 @@
                     v-model="selectedPassword"
                     :type="toggle ? 'text' : 'password'"
                     placeholder="Password"
+                    @keyup.enter="userRegister"
                 />
                 <img
                     class="togle-password"
@@ -42,6 +58,7 @@
                     v-model="selectedRepeatPassword"
                     :type="toggle ? 'text' : 'password'"
                     placeholder="Repeat Password"
+                    @keyup.enter="userRegister"
                 />
                 <img
                     class="togle-password"
@@ -52,13 +69,13 @@
             <small class="error">{{ errors.password ? errors.password[0] : '' }}</small>
         </div>
         <div class="form-group">
-            <button @click="registrarUsuario" class="buttonRegister">Register</button>
+            <button @click="userRegister" class="buttonRegister">Register</button>
         </div>
     </section>
 </template>
 
 <script>
-import { sweetMessage } from '@/helpers/alertsService'
+import { hideSweetLoading, showSweetLoading, sweetMessage } from '@/helpers/alertsService'
 import { axiosGetRequest, axiosPostRequest } from '@/helpers/helpers'
 import router from '@/router'
 import { onMounted, ref } from 'vue'
@@ -95,7 +112,7 @@ export default {
         }
     },
     methods: {
-        async registrarUsuario() {
+        async userRegister() {
             const data = {
                 docType: this.selectedDoctype,
                 document: this.selectedDocument,
@@ -104,12 +121,14 @@ export default {
                 password: this.selectedPassword,
                 password_confirmation: this.selectedRepeatPassword
             }
-
+            showSweetLoading('Registering...')
             try {
                 await axiosPostRequest('/userRegister', data, {})
+                hideSweetLoading()
                 await sweetMessage('User registered succesfully', 'please check your email inbox')
                 router.go()
             } catch (e) {
+                hideSweetLoading()
                 if (e.response.status == 403) {
                     const errorMessage = e.response.data.message
                     await sweetMessage(errorMessage, '', 'error', 1500)
