@@ -17,7 +17,9 @@
                 <p>{{ business.email }}</p>
                 <p>{{ business.document }}</p>
                 <div class="actions">
-                    <button class="btn-see">Go to Calendar</button>
+                    <button class="btn-see" @click="goToBusinessCalendar(business.id)">
+                        Go to Calendar
+                    </button>
                 </div>
             </div>
         </div>
@@ -50,7 +52,9 @@
                     <p>{{ business.document }}</p>
                 </div>
                 <div class="actions">
-                    <button class="btn-see">Go to Calendar</button>
+                    <button class="btn-see" @click="goToBusinessCalendar(business.id)">
+                        Go to Calendar
+                    </button>
                 </div>
             </div>
         </div>
@@ -64,6 +68,7 @@ import { RouterLink } from 'vue-router'
 import headerComponent from '@/components/headerComponent.vue'
 import { onMounted, ref, watch } from 'vue'
 import { axiosGetRequest } from '@/helpers/helpers'
+import router from '@/router'
 // import UserDatesView from './userDatesView.vue'
 export default {
     name: 'dashboardView',
@@ -93,6 +98,9 @@ export default {
     methods: {
         async search() {
             this.businessList = await axiosGetRequest('/getBusinessList', { filter: this.filter })
+        },
+        goToBusinessCalendar(id) {
+            router.push(`calendar/${id}`)
         }
     }
 }
